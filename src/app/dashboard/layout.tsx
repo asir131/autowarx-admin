@@ -9,7 +9,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   return (
     <SidebarProvider  >
-      <AppSidebar className="mr-5 bg-white" variant="inset" />
+      <AppSidebar className="mr-5 bg-white " variant="inset" />
       <SidebarInset  >
         <SiteHeader  />
         <div className="flex  flex-1 flex-col  bg-[#F5F5F5]">

@@ -55,7 +55,7 @@ export function DualBarCharts() {
   const [leadsTimeRange, setLeadsTimeRange] = React.useState("Weekly")
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 ">
       {/* Total Sales Chart */}
       <Card className="p-5 rounded-md">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

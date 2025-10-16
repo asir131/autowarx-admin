@@ -11,28 +11,28 @@ import {
 export function SectionCards() {
   const cardData = [
     {
-      value: "12",
-      label: "Avg. Days on Market",
+      value: "120K",
+      label: "Total User",
       trend: null
     },
     {
-      value: "--",
-      label: "Investment",
+      value: "120",
+      label: "New User",
+      trend: null
+    },
+    {
+      value: "23K",
+      label: "Total Listed",
+      trend: null
+    },
+    {
+      value: "102",
+      label: "New Listed",
       trend: null
     },
     {
       value: "1000.00$",
       label: "Earning",
-      trend: null
-    },
-    {
-      value: "149",
-      label: "Leads",
-      trend: null
-    },
-    {
-      value: "149",
-      label: "Views",
       trend: null
     }
   ]

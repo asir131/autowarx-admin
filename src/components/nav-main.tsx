@@ -30,11 +30,12 @@ export function NavMain({
   console.log("pathname", pathname);
   
   // Check if we're on any inventory-related page
-  const isInventorySection = pathname.startsWith('/dashboard/inventory');
+  const isUserSection = pathname.startsWith('/dashboard/user');
   
   // Determine which inventory sub-item is active
-  const isExistingInventoryActive = pathname === '/dashboard/inventory' || pathname === '/dashboard/inventory/existingInventory';
-  const isSoldInventoryActive = pathname === '/dashboard/inventory/soldInventory';
+  const isUserActive = pathname === '/dashboard/user' ;
+  const isDealerActive = pathname === '/dashboard/user/dealer' ;
+  const isIndividualActive = pathname === '/dashboard/user/individual';
   
   // Check if we're on any leads & contacts related page
   const isLeadsContactsSection = pathname.startsWith('/dashboard/leads&contacts');
@@ -48,7 +49,7 @@ export function NavMain({
   
   // Determine which auction sub-item is active
   const isListingsActive = pathname === '/dashboard/auction/listings';
-  const isBidOfferActive = pathname === '/dashboard/auction/bid-offer';
+  const isRunningActive = pathname === '/dashboard/auction/running';
   
   // Check if we're on any tools-related page
   const isToolsSection = pathname.startsWith('/dashboard/tools');
@@ -58,7 +59,7 @@ export function NavMain({
   const isCustomActive = pathname === '/dashboard/tools/custom';
   
   // Check if we're on any reports-related page
-  const isReportsSection = pathname.startsWith('/dashboard/reports');
+  const isPaymentSection = pathname.startsWith('/dashboard/payment');
   
   // Determine which reports sub-item is active
   const isInventoryHistoryActive = pathname === '/dashboard/reports';
@@ -85,11 +86,11 @@ export function NavMain({
         <SidebarMenu>
           {items.map((item) => {
             const isActive = pathname === item.url || 
-              (item.title === "Inventory" && isInventorySection) ||
+              (item.title === "User" && isUserSection) ||
               (item.title === "Leads & Contacts" && isLeadsContactsSection) ||
               (item.title === "Auction" && isAuctionSection) ||
               (item.title === "Tools" && isToolsSection) ||
-              (item.title === "Reports" && isReportsSection) ||
+              (item.title === "Payment" && isPaymentSection) ||
               (item.title === "Support" && isSupportSection);
             
             return (
@@ -115,15 +116,17 @@ export function NavMain({
                       </div>
                       
                       {/* Conditionally render the arrows, except for 'Overview' */}
-                      {item.title !== "Overview" && (
-                        isActive ? <IoIosArrowUp /> : <IoIosArrowDown /> 
-                      )}
+                      {(item.title === "User" || item.title === "Auction") && (
+  isActive ? <IoIosArrowUp /> : <IoIosArrowDown />
+)}
+
+
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
 
                 {/* Render submenu for Inventory when it's active */}
-                {item.title === "Inventory" && isInventorySection && (
+                {item.title === "User" && isUserSection && (
                   <div className="ml-6 ">
                     <SidebarMenu>
                       <SidebarMenuItem>
@@ -131,11 +134,11 @@ export function NavMain({
                           asChild
                           className={cn(
                             "text-sm py-6 opacity-55",
-                            isExistingInventoryActive && "bg-[#FFF4A3] text-accent-foreground font-medium"
+                            isDealerActive && "bg-[#FFF4A3] text-accent-foreground font-medium"
                           )}
                         >
-                          <Link href="/dashboard/inventory">
-                            Existing Inventory
+                          <Link href="/dashboard/user/dealer">
+                            Dealer
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
@@ -144,11 +147,11 @@ export function NavMain({
                           asChild
                           className={cn(
                             "text-sm py-6 opacity-55",
-                            isSoldInventoryActive && "bg-[#FFF4A3] text-accent-foreground font-medium"
+                            isIndividualActive && "bg-[#FFF4A3] text-accent-foreground font-medium"
                           )}
                         >
-                          <Link href="/dashboard/inventory/soldInventory">
-                            Sold Inventory
+                          <Link href="/dashboard/user/individual">
+                            Individual
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
@@ -212,11 +215,11 @@ export function NavMain({
                           asChild
                           className={cn(
                             "text-sm py-6 opacity-55",
-                            isBidOfferActive && "bg-[#FFF4A3] text-accent-foreground font-medium"
+                            isRunningActive && "bg-[#FFF4A3] text-accent-foreground font-medium"
                           )}
                         >
-                          <Link href="/dashboard/auction/bid-offer">
-                            Bid Offer
+                          <Link href="/dashboard/auction/running">
+                            Running
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
@@ -258,65 +261,7 @@ export function NavMain({
                   </div>
                 )}
 
-                {/* Render submenu for Reports when it's active */}
-                {item.title === "Reports" && isReportsSection && (
-                  <div className="ml-6 ">
-                    <SidebarMenu>
-                      <SidebarMenuItem>
-                        <SidebarMenuButton 
-                          asChild
-                          className={cn(
-                            "text-sm py-6 opacity-55",
-                            isInventoryHistoryActive && "bg-[#FFF4A3] text-accent-foreground font-medium"
-                          )}
-                        >
-                          <Link href="/dashboard/reports">
-                            Inventory History
-                          </Link>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                      <SidebarMenuItem>
-                        <SidebarMenuButton 
-                          asChild
-                          className={cn(
-                            "text-sm py-6 opacity-55",
-                            isInvoiceHistoryActive && "bg-[#FFF4A3] text-accent-foreground font-medium"
-                          )}
-                        >
-                          <Link href="/dashboard/reports/invoice-history">
-                            Invoice History
-                          </Link>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                      <SidebarMenuItem>
-                        <SidebarMenuButton 
-                          asChild
-                          className={cn(
-                            "text-sm py-6 opacity-55",
-                            isLeadsInfoActive && "bg-[#FFF4A3] text-accent-foreground font-medium"
-                          )}
-                        >
-                          <Link href="/dashboard/reports/leads-info">
-                            Leads Info
-                          </Link>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                      <SidebarMenuItem>
-                        <SidebarMenuButton 
-                          asChild
-                          className={cn(
-                            "text-sm py-6 opacity-55",
-                            isCFSAnalyticsActive && "bg-[#FFF4A3] text-accent-foreground font-medium"
-                          )}
-                        >
-                          <Link href="/dashboard/reports/cfs-analytics">
-                            CFS Analytics
-                          </Link>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    </SidebarMenu>
-                  </div>
-                )}
+               
 
                 {/* Render submenu for Support when it's active */}
                 {item.title === "Support" && isSupportSection && (
