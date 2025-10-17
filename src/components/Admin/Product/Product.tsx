@@ -2,15 +2,13 @@
 
 import { useState } from 'react';
 import { MoveLeft } from 'lucide-react';
-
+import { useRouter } from 'next/navigation';
 interface Product {
   id: number;
   name: string;
-  productId: string;
   category: string;
-  bidId: string;
-  offerValue: string;
-  date: string;
+  created: string;
+  productId: string;
   image: string;
   hasAccept: boolean;
 }
@@ -68,32 +66,29 @@ const generateProductData = (): Product[] => {
   return Array.from({ length: 50 }, (_, i) => ({
     id: i + 1,
     name: productNames[i % productNames.length],
-    productId: `#${434232 + i}`,
     category: categories[i % categories.length],
-    bidId: `#${434232 + i}`,
-    offerValue: '$200',
-    date: '6 April,2025',
+    created: '6 April 2023',
+    productId: `#${434232 + i}`,
     image: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=80&h=60&fit=crop',
     hasAccept: i % 3 === 0,
   }));
 };
 
-export default function AuctionPage() {
+export default function Product() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('Newest');
   const [selectedCategory, setSelectedCategory] = useState('Select Category');
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [productData, setProductData] = useState<Product[]>(generateProductData());
-
+  const router = useRouter();
   const sortOptions = ['Newest', 'Oldest', 'Name: A to Z', 'Name: Z to A'];
   const categoryOptions = ['Select Category', 'Sedan', 'SUV', 'Truck', 'Coupe'];
 
   const filteredData = productData.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       product.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.productId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.bidId.toLowerCase().includes(searchQuery.toLowerCase());
+      product.productId.toLowerCase().includes(searchQuery.toLowerCase());
     
     const matchesCategory = selectedCategory === 'Select Category' || product.category === selectedCategory;
     
@@ -120,7 +115,7 @@ export default function AuctionPage() {
   const handleApplyFilter = () => setCurrentPage(1);
 
   const handleViewProduct = (productId: number) => {
-    console.log(`Viewing product ${productId}`);
+    router.push(`/dashboard/product/${productId}`);
   };
 
   return (
@@ -129,7 +124,7 @@ export default function AuctionPage() {
         {/* Header */}
         <div className="flex items-center gap-2">
           <MoveLeft className="cursor-pointer" onClick={() => window.history.back()} />
-          <button onClick={() => window.history.back()} className="px-2 py-2 rounded-3xl font-medium">Auction </button>
+          <button onClick={() => window.history.back()} className="px-2 py-2 rounded-3xl font-medium">All Product</button>
         </div>
 
         {/* Filters */}
@@ -157,6 +152,7 @@ export default function AuctionPage() {
             />
           </div>
 
+          
           <div className="relative flex-1 min-w-[200px]">
             <select
               value={sortBy}
@@ -196,6 +192,7 @@ export default function AuctionPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </div>
+          
 
           <button
             onClick={handleApplyFilter}
@@ -208,10 +205,10 @@ export default function AuctionPage() {
         {/* Table */}
         <div className="bg-white rounded-lg shadow-sm overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-sm min-w-[800px]">
+            <table className="w-full text-sm min-w-[700px]">
               <thead className="bg-white border-b">
                 <tr>
-                  {['Product Name', 'Product ID', 'Category', 'Bid ID', 'Offer Value', 'Date', 'Action'].map((h) => (
+                  {['Product Name', 'Category', 'Created', 'Product ID', 'Action'].map((h) => (
                     <th key={h} className="px-4 sm:px-6 py-4 text-left font-medium text-gray-600">
                       {h}
                     </th>
@@ -227,11 +224,9 @@ export default function AuctionPage() {
                         <span className="font-medium text-gray-900">{product.name}</span>
                       </div>
                     </td>
-                    <td className="px-4 sm:px-6 py-3">{product.productId}</td>
                     <td className="px-4 sm:px-6 py-3">{product.category}</td>
-                    <td className="px-4 sm:px-6 py-3">{product.bidId}</td>
-                    <td className="px-4 sm:px-6 py-3">{product.offerValue}</td>
-                    <td className="px-4 sm:px-6 py-3">{product.date}</td>
+                    <td className="px-4 sm:px-6 py-3">{product.created}</td>
+                    <td className="px-4 sm:px-6 py-3">{product.productId}</td>
                     <td className="px-4 sm:px-6 py-3">
                       <div className="flex flex-wrap gap-2">
                         {product.hasAccept && (
@@ -278,7 +273,7 @@ export default function AuctionPage() {
                 }}
                 className="border border-gray-300 rounded px-3 py-1 focus:outline-none focus:ring-2 focus:ring-[#FFE135]"
               >
-                {[10, 20, 50].map(n => (
+                {[8, 10, 20, 50].map(n => (
                   <option key={n} value={n}>{n}</option>
                 ))}
               </select>

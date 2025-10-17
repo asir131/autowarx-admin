@@ -1,9 +1,10 @@
-import BidOffer from '@/components/Pages/Vendor/Auction/BidOffer'
+import Running from '@/components/Pages/Vendor/Auction/Running'
+
 import React from 'react'
 
 const page = () => {
   return (
-    <div><BidOffer/>
+    <div><Running/>
         
     </div>
   )

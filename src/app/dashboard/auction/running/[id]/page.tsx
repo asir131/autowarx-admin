@@ -1,163 +1,98 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import { useRouter, useParams } from 'next/navigation';
-
-interface BidOfferPageProps {
-  params: Promise<{ id: string }>;
-}
-
-interface BidData {
-  bidNumber: string;
-  orderDate: string;
-  userName: string;
-  userPhone: string;
-  userId: string;
-  userEmail: string;
-  productName: string;
-  category: string;
-  productId: string;
-  bidId: string;
-  mainItemPrice: number;
-  additionalItem: string;
-  additionalItemPrice: string;
-  bidCount: number;
-  comment: string;
-}
-
-export default function BidOfferPage({ params }: BidOfferPageProps) {
-  const { id } = useParams();  // Use useParams hook here
-  const router = useRouter();  // Use useRouter hook here
-
-  // Example of static bidData
-  const [bidData, setBidData] = useState<BidData | null>(null);
-
-  // Fetching data based on `id` could go here if necessary
-  useEffect(() => {
-    const fetchBidData = async () => {
-      // Mocking the bidData for demonstration, replace with actual API call
-      const fetchedBidData: BidData = {
-        bidNumber: '5444',
-        orderDate: 'Order 21 April, 2025 14:30 GMT',
-        userName: 'Abdur Khan',
-        userPhone: '98390903',
-        userId: 'USR-#888',
-        userEmail: 'example@gmail.com',
-        productName: '2020 Honda Civic LX',
-        category: 'Sedan',
-        productId: '434232',
-        bidId: '434232',
-        mainItemPrice: 1800,
-        additionalItem: 'Tool box',
-        additionalItemPrice: 'Free',
-        bidCount: 5,
-        comment: 'I would like to bid at 2007 Toyota Tacoma Base you have listed on Autowurx.com for $18,499 is still available.',
-      };
-
-      setBidData(fetchedBidData);
-    };
-
-    fetchBidData();
-  }, [id]);  // Runs when the component mounts or `id` changes
-
-  const handleBack = () => {
-    router.back();  // Go back to the previous page
-  };
-
-  if (!bidData) {
-    return <div>Loading...</div>;  // Show a loading state until bidData is available
-  }
-
+import React from "react";
+import { MoveLeft } from "lucide-react";
+import { useParams } from "next/navigation";
+import Image from "next/image";
+import img from "@/assets/vendor/profile.png";
+import car from "@/assets/vendor/car.png"
+const navigated = () => {
+  const params = useParams();
+  const userId = params.id;
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-4xl ">
-        <button 
-          onClick={handleBack}
-          className="inline-block px-6 py-2 text-sm font-medium rounded text-black mb-6"
-          style={{ backgroundColor: '#FFE135' }}
-        >
-          Back
-        </button>
-
-        <div className="flex justify-between items-start border-b-2 pb-5 mb-8">
-          <h1 className="text-3xl font-semibold text-gray-900">
-            Bid #{id || 'N/A'}
-          </h1>
-          <p className="text-sm text-gray-600">{bidData.orderDate}</p>
+    <div className="min-h-screen ">
+      <div className="p-4 sm:p-6 flex flex-col gap-6">
+        {/* Header */}
+        <div className="flex items-center gap-2">
+          <MoveLeft />
+          <button
+            onClick={() => window.history.back()}
+            className="px-2 py-2 rounded-3xl font-medium"
+          >
+            Back
+          </button>
         </div>
+      </div>
+      <div className="lg:flex ml-8  border-b-2 pb-3 justify-between  lg:mx-6">
+        <div className="font-bold text-2xl flex">
+          <h1>User Id </h1> #{userId}
+        </div>
+        <div>
+          <p>Created 21 April, 2025 14:30 GMT</p>
+        </div>
+      </div>
 
-        <div className="bg-white rounded-lg p-8 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-8 mb-8">
-            <div>
-              <h2 className="text-xs text-gray-500 mb-4">Your Information</h2>
-              <div className="space-y-2">
-                <p className="text-sm text-gray-900">Name: {bidData.userName}</p>
-                <p className="text-sm text-gray-900">Phone Number: {bidData.userPhone}</p>
-                <p className="text-sm text-gray-900">User ID: {bidData.userId}</p>
-                <p className="text-sm text-gray-900">Email: {bidData.userEmail}</p>
-              </div>
-            </div>
-
-            <div>
-              <h2 className="text-xs text-gray-500 mb-4">Product Info</h2>
-              <div className="space-y-2">
-                <p className="text-sm text-gray-900">Name: {bidData.productName}</p>
-                <p className="text-sm text-gray-900">Category: {bidData.category}</p>
-                <p className="text-sm text-gray-900">Product ID: {bidData.productId}</p>
-                <p className="text-sm text-gray-900">Bid ID: {bidData.bidId}</p>
-              </div>
-            </div>
+      <div className="w-[350px] lg:w-[800px] bg-white ml-6 mt-5 p-8 rounded-lg">
+        <div className="lg:flex justify-between">
+          <div>
+            <p className="text-sm opacity-65 mb-5">Product Information</p>
+            <p>Name: Abdur Rahman</p>
+            <p>Category: Sedan</p>
+            <p>User ID: USR-#888</p>
+            <p>Created: 6 April 2023</p>
           </div>
-
-          <div className="border-t border-gray-200 pt-6">
-            <h2 className="text-base font-semibold text-gray-900 mb-6">Bid Details</h2>
-
-            <form>
-              <div className="space-y-5">
-                <div className="flex justify-between items-center">
-                  <p className="text-sm text-gray-900">Bid</p>
-                  <p className="text-sm text-gray-900">{bidData.bidCount}</p>
-                </div>
-
-                <div className="flex justify-between items-center pb-5 border-b border-gray-200">
-                  <p className="text-sm text-gray-900">Bid Price</p>
-                  <p className="text-sm text-gray-900">${bidData.mainItemPrice}</p>
-                </div>
-
-                <div>
-                  <label htmlFor="offer-input" className="block text-sm text-gray-900 mb-2">Offer</label>
-                  <input
-                    id="offer-input"
-                    name="offer"
-                    type="text"
-                    placeholder="Offer $"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="comments-textarea" className="block text-sm text-gray-900 mb-2">Comments</label>
-                  <textarea
-                    id="comments-textarea"
-                    name="comments"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 resize-none"
-                    rows={3}
-                    defaultValue={bidData.comment}
-                  />
-                </div>
-                <div className="flex justify-end">
-                  <button
-                    type="submit"
-                    className="px-16 py-2.5 text-sm font-medium text-black rounded"
-                    style={{ backgroundColor: '#FFE135' }}
-                  >
-                    Offer
-                  </button>
-                </div>
-              </div>
-            </form>
+          <div className="leading-relaxed">
+            <p className="text-sm opacity-60 mb-5">Business Information</p>
+            <Image src={img} width={80} height={100} alt="" />
+            <p className="mt-4">Business Name: Fresh Market</p>
+            <p>Business Category: Hybrid</p>
+            <p>Address: New York, America</p>
+            <p>Business Hour: 10 AM-11 PM </p>
+            <p>Phone Number: 01322424</p>
           </div>
+        </div>
+        <div className="border-b pb-3 mt-10">
+          <div>Photo</div>
+          
+        </div>
+        <div>
+            <div className="mt-5 grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                <Image className="rounded-xl" src={car} height={100} width={150} alt=""/>
+                <Image className="rounded-xl" src={car} height={100} width={150} alt=""/>
+                <Image className="rounded-xl" src={car} height={100} width={150} alt=""/>
+                <Image className="rounded-xl" src={car} height={100} width={150} alt=""/>
+            </div>
+            <div className="lg:flex justify-between w-4/5 mt-5">
+                <div>
+                    <p className="font-bold">Overview</p>
+                    <p>Exterior Color: Blue</p>
+                    <p>Interior Color: Gray</p>
+                    <p>Vin: 5TELU42N87Z328956</p>
+                    <p>Mileage: 54,456</p>
+                    <p>Stock: 328956</p>
+                    <p>Drive Type: 4WD</p>
+                    <p>Engine: 4L V6</p>
+                    <p>Transmission: Manual</p>
+                    <p>Fuel: Manual</p>
+                    <p>MPG Highway: 20 MPG</p>
+                    <p>MPG City: 16 MPG</p>
+                </div>
+                <div>
+                    <p className="font-bold">Features</p>
+                    <p>Exterior: Upgrade Paint</p>
+                    <p>Vehicle Segment: Compact Pickup</p>
+                    <p>Infotainment: Premium Speakers</p>
+                    <p>Safety & Driver Assist: Brake Assist</p>
+                </div>
+            </div>
+        </div>
+        <div className="flex gap-3 justify-end mt-10">
+            
+            <button className="bg-[#FFFCEB] text-[#F93827] border border-[#F93827] px-5 py-2 font-semibold rounded-lg">Delete Auction</button>
+            
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default navigated;
