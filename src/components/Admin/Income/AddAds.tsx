@@ -1,22 +1,26 @@
 "use client";
 import { MoveLeft } from "lucide-react";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, ChangeEvent } from "react";
 
-const AddAds = () => {
-  const [file, setFile] = useState(null);
-  const [area, setArea] = useState("All");
-  const [duration, setDuration] = useState("7 days");
-  const fileInputRef = useRef(null); // Reference for the file input
+// Define the type of the file state variable
+type FileState = string | null;
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
+const AddAds: React.FC = () => {
+  const [file, setFile] = useState<FileState>(null);
+  const [area, setArea] = useState<string>("All");
+  const [duration, setDuration] = useState<string>("7 days");
+  const fileInputRef = useRef<HTMLInputElement | null>(null); // Reference for the file input
+
+  // Handle the file change event
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0]; // Optional chaining to handle cases where no file is selected
     if (selectedFile) {
-      setFile(URL.createObjectURL(selectedFile));
+      setFile(URL.createObjectURL(selectedFile)); // Set file URL for preview
     }
   };
 
   const handleDivClick = () => {
-    fileInputRef.current.click(); // Trigger the file input click
+    fileInputRef.current?.click(); // Trigger file input click if ref is set
   };
 
   return (
@@ -56,20 +60,20 @@ const AddAds = () => {
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                   d="M2.99902 9.33105C3.55131 9.33105 3.99902 9.62953 3.99902 9.99772V12.6644C3.99902 12.8412 4.10438 13.0108 4.29192 13.1358C4.47945 13.2608 4.73381 13.3311 4.99902 13.3311H18.999C19.2642 13.3311 19.5186 13.2608 19.7061 13.1358C19.8937 13.0108 19.999 12.8412 19.999 12.6644V9.99772C19.999 9.62953 20.4467 9.33105 20.999 9.33105C21.5513 9.33105 21.999 9.62953 21.999 9.99772V12.6644C21.999 13.1948 21.6829 13.7035 21.1203 14.0786C20.5577 14.4537 19.7947 14.6644 18.999 14.6644H4.99902C4.20337 14.6644 3.44031 14.4537 2.8777 14.0786C2.31509 13.7035 1.99902 13.1948 1.99902 12.6644V9.99772C1.99902 9.62953 2.44674 9.33105 2.99902 9.33105Z"
                   fill="#FFE135"
                 />
                 <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                   d="M11.2924 1.52729C11.6829 1.26694 12.3161 1.26694 12.7066 1.52729L17.7066 4.86063C18.0971 5.12098 18.0971 5.54309 17.7066 5.80344C17.3161 6.06379 16.6829 6.06379 16.2924 5.80344L11.9995 2.94151L7.70662 5.80344C7.31609 6.06379 6.68293 6.06379 6.2924 5.80344C5.90188 5.54309 5.90188 5.12098 6.2924 4.86063L11.2924 1.52729Z"
                   fill="#FFE135"
                 />
                 <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
+                  fillRule="evenodd"
+                  clipRule="evenodd"
                   d="M11.9995 1.33203C12.5518 1.33203 12.9995 1.63051 12.9995 1.9987V9.9987C12.9995 10.3669 12.5518 10.6654 11.9995 10.6654C11.4472 10.6654 10.9995 10.3669 10.9995 9.9987V1.9987C10.9995 1.63051 11.4472 1.33203 11.9995 1.33203Z"
                   fill="#FFE135"
                 />
@@ -106,7 +110,7 @@ const AddAds = () => {
               <div className="border border-[#9194A9] rounded-xl px-5 py-3">
                 <input
                   id="url"
-                  className="outline-none"
+                  className="outline-none w-full"
                   type="text"
                   placeholder="Enter URL of the banner of ads if any"
                 />
