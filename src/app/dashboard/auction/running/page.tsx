@@ -1,4 +1,4 @@
-import Running from '@/components/Pages/Vendor/Auction/Running'
+import Running from '@/components/Admin/Auction/Running'
 
 import React from 'react'
 

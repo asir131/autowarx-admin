@@ -1,10 +1,11 @@
-import Listings from '@/components/Admin/Auction/Listings'
+
+import Package from '@/components/Admin/Income/Package'
 import React from 'react'
 
 const page = () => {
   return (
-    <div><Listings/>
-        
+    <div>
+        <Package/>
     </div>
   )
 }

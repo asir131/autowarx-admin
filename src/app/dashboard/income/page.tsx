@@ -1,8 +1,9 @@
+import Income from '@/components/Admin/Income/Income'
 import React from 'react'
 
 const page = () => {
   return (
-    <div>income</div>
+    <div><Income/></div>
   )
 }
 

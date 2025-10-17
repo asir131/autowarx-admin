@@ -1,9 +1,9 @@
-import Auction from '@/components/Admin/Auction/Auction'
+import AddAds from '@/components/Admin/Income/AddAds'
 import React from 'react'
 
 const page = () => {
   return (
-    <div><Auction/></div>
+    <div><AddAds/></div>
   )
 }
 
