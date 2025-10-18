@@ -237,7 +237,7 @@ export default function User() {
                           View
                         </button>
                         <button
-                          onClick={() => handleViewUser(user.id)}
+                          onClick={() => handleDelete(user.id)}
                           className="p-1.5 hover:bg-gray-100 rounded"
                         >
                           <TrashIcon />

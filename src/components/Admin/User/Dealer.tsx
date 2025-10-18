@@ -235,7 +235,7 @@ export default function Dealer() {
                           View
                         </button>
                         <button
-                          onClick={() => handleViewDealer(user.id)}
+                          onClick={() => handleDelete(user.id)}
                           className="p-1.5 hover:bg-gray-100 rounded"
                         >
                           <TrashIcon />

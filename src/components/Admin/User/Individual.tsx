@@ -235,7 +235,7 @@ export default function Individual() {
                           View
                         </button>
                         <button
-                          onClick={() => handleViewIndividual(user.id)}
+                          onClick={() => handleDelete(user.id)}
                           className="p-1.5 hover:bg-gray-100 rounded"
                         >
                           <TrashIcon />
