@@ -27,6 +27,7 @@ export function NavSecondary({
   const pathname = usePathname()
   const router = useRouter()
   const [showLogoutModal, setShowLogoutModal] = React.useState(false)
+  const [isLogoutActive, setIsLogoutActive] = React.useState(false)
 
   // Check if we're on any settings-related page
   const isSettingsSection = pathname.startsWith('/dashboard/settings')
@@ -42,13 +43,22 @@ export function NavSecondary({
     console.log("Logging out...")
     // Example: router.push('/login')
     setShowLogoutModal(false)
+    setIsLogoutActive(false) // Reset active state after logout
   }
 
   const handleItemClick = (e: React.MouseEvent, item: typeof items[0]) => {
     if (item.title === "Log Out") {
       e.preventDefault()
+      setIsLogoutActive(true) // Set logout button as active
       setShowLogoutModal(true)
+    } else {
+      setIsLogoutActive(false) // Reset logout active state when other items are clicked
     }
+  }
+
+  const handleModalClose = () => {
+    setShowLogoutModal(false)
+    setIsLogoutActive(false) // Reset active state when modal is closed without logging out
   }
 
   return (
@@ -59,14 +69,15 @@ export function NavSecondary({
             {items.map((item) => {
               const IconComponent = item.icon as LucideIcon
               const isActive = pathname === item.url || 
-                             (item.title === "Settings" && isSettingsSection)
+                             (item.title === "Settings" && isSettingsSection) ||
+                             (item.title === "Log Out" && isLogoutActive)
               
               return (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton 
                     asChild
                     className={cn(
-                      isActive && item.title === "Settings" && "bg-[#FFE135] text-accent-foreground font-medium"
+                      isActive && "bg-[#FFE135] text-accent-foreground font-medium"
                     )}
                   >
                     <a 
@@ -90,7 +101,7 @@ export function NavSecondary({
 
       <LogoutModal 
         open={showLogoutModal}
-        onOpenChange={setShowLogoutModal}
+        onOpenChange={handleModalClose}
         onConfirm={handleLogout}
       />
     </>

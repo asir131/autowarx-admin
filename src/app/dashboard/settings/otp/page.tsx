@@ -1,9 +1,9 @@
-import Payment from '@/components/Admin/Payment/Payment'
+import SendOtp from '@/components/Admin/Settings/SendOtp'
 import React from 'react'
 
 const page = () => {
   return (
-    <div><Payment/></div>
+    <div><SendOtp/></div>
   )
 }
 

@@ -1,71 +1,48 @@
 "use client";
 
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
-
 import { useState } from "react";
 import type React from "react";
-import MyDetails from "@/components/Pages/Vendor/Settings/MyDetails";
-import StoreDetails from "@/components/Pages/Vendor/Settings/StoreDetails";
-import TermsAndCondition from "@/components/Pages/Vendor/Settings/TermsAndCondition";
-import PrivacyAndPolicy from "@/components/Pages/Vendor/Settings/PrivacyAndPolicy";
+import Settings from "@/components/Admin/Settings/Settings";
+import { ChevronRight, MoveLeft } from "lucide-react";
+import Link from "next/link";
 
 const Setting: React.FC = () => {
   const [activeTab, setActiveTab] = useState("myDetails");
 
-  return (
-    <div className="min-h-screen bg-gray-100 px-4 sm:px-6 lg:px-10">
-      <div className=" mb-8 ">
-        <div
-          className="flex items-center gap-2 text-lg sm:text-xl md:text-[28px] font-semibold cursor-pointer"
-          onClick={() => window.history.back()}
-        >
-          <MdOutlineKeyboardArrowLeft size={35} />
-          <span className="break-words">Setting</span>
-        </div>
+  const linkData = [
+    { href: "/dashboard/settings/personal-information", text: "Personal Information" },
+    { href: "/dashboard/settings/change-password", text: "Change Password" },
+    { href: "/dashboard/income/package", text: "Privacy Policy" },
+    { href: "/dashboard/income/package", text: "Terms and Condition" },
+    { href: "/dashboard/income/package", text: "About us" },
+  ];
 
-        <div className="md:mt-5 md:ml-5 grid grid-cols-2 md:flex gap-2 md:gap-5">
+  return (
+    <div className="min-h-screen ">
+      <div className="p-4 sm:p-6 flex flex-col gap-6">
+        {/* Header */}
+        <div className="flex items-center gap-2">
+          <MoveLeft />
           <button
-            className={`border text-xs md:text-base  border-[#FFE135]  md:px-5 py-2 rounded-full ${
-              activeTab === "myDetails" ? "bg-[#FFE135]" : "bg-[#FFFCEB]"
-            }`}
-            onClick={() => setActiveTab("myDetails")}
+            onClick={() => window.history.back()}
+            className="px-2 py-2 rounded-3xl font-medium"
           >
-            My Details
-          </button>
-          <button
-            className={`border text-xs md:text-base border-[#FFE135] md:px-5 py-2 rounded-full ${
-              activeTab === "storeDetails" ? "bg-[#FFE135]" : "bg-[#FFFCEB]"
-            }`}
-            onClick={() => setActiveTab("storeDetails")}
-          >
-            Store Details
-          </button>
-          <button
-            className={`border text-xs md:text-base border-[#FFE135] md:px-5 py-2 rounded-full ${
-              activeTab === "termsCondition" ? "bg-[#FFE135]" : "bg-[#FFFCEB]"
-            }`}
-            onClick={() => setActiveTab("termsCondition")}
-          >
-            Terms of Condition
-          </button>
-          <button
-            className={`border text-xs md:text-base border-[#FFE135] md:px-5 py-2 rounded-full ${
-              activeTab === "privacyPolicy" ? "bg-[#FFE135]" : "bg-[#FFFCEB]"
-            }`}
-            onClick={() => setActiveTab("privacyPolicy")}
-          >
-            Privacy Policy
+            Settings
           </button>
         </div>
       </div>
-
-      <div className="       ">
-        <div className="     rounded-lg  md:p-4 sm:p-6">
-          {activeTab == "myDetails" && <MyDetails />}
-          {activeTab === "storeDetails" && <StoreDetails />}
-          {activeTab === "termsCondition" && <TermsAndCondition/>}
-          { activeTab === "privacyPolicy" && <PrivacyAndPolicy/>}
-        </div>
+      <div className='mx-6'>
+        {linkData.map((link, index) => (
+          <Link
+            key={index}
+            href={link.href}
+            className="border flex items-center justify-between px-5 py-4 rounded-lg mb-5 bg-[#FFFCEB] border-gray-200 hover:bg-white hover:border-[#FFE135] hover:shadow-[0px_0px_8px_4px_rgba(1,1,1,0.1)] transition-all duration-200"
+          >
+            <p>{link.text}</p>
+            <ChevronRight />
+          </Link>
+        ))}
       </div>
     </div>
   );
