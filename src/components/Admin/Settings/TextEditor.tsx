@@ -5,7 +5,7 @@ import React, { useEffect } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TextAlign from "@tiptap/extension-text-align";
-import FontSize from "./FontSize"; // <-- ensure this path matches your FS
+import FontSize from "./FontSize";
 import MenuEditor from "./MenuEditor";
 
 interface TextEditorProps {
@@ -23,7 +23,7 @@ const TextEditor: React.FC<TextEditorProps> = ({ value, onChange, editable = tru
         italic: { HTMLAttributes: { class: "italic" } },
       }),
       TextAlign.configure({ types: ["heading", "paragraph"] }),
-      FontSize, // <-- register the extension here
+      FontSize,
     ],
     content: value,
     editable,
@@ -39,24 +39,28 @@ const TextEditor: React.FC<TextEditorProps> = ({ value, onChange, editable = tru
     },
   });
 
-  // optional: debug list of registered extensions (run in browser console)
+  // Debug extension registration
   useEffect(() => {
     if (!editor) return;
-    // logs array of registered extension names to browser console
-    // helpful to verify the extension was registered
-    // eslint-disable-next-line no-console
     console.log("Registered extensions:", editor.extensionManager.extensions.map(e => e.name));
   }, [editor]);
 
+  // Fixed useEffect - always returns a cleanup function or void
   useEffect(() => {
-    if (!editor) return;
+    if (!editor) return; // Returns void when no editor
+    
     const handler = () => {
       const sel = editor.state.selection;
       const text = editor.state.doc.textBetween(sel.from, sel.to, " ");
       if (text.trim()) console.log("Selected text:", text);
     };
+    
     editor.on("selectionUpdate", handler);
-    return () => editor.off("selectionUpdate", handler);
+    
+    // Return cleanup function - this always runs regardless of the initial condition
+    return () => {
+      editor.off("selectionUpdate", handler);
+    };
   }, [editor]);
 
   if (!editor) return null;
