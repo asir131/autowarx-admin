@@ -14,8 +14,8 @@ const Setting: React.FC = () => {
     { href: "/dashboard/settings/personal-information", text: "Personal Information" },
     { href: "/dashboard/settings/change-password", text: "Change Password" },
     { href: "/dashboard/settings/privacy-policy", text: "Privacy Policy" },
-    { href: "/dashboard/income/package", text: "Terms and Condition" },
-    { href: "/dashboard/income/package", text: "About us" },
+    { href: "/dashboard/settings/terms-condition", text: "Terms and Condition" },
+    { href: "/dashboard/settings/about-us", text: "About us" },
   ];
 
   return (

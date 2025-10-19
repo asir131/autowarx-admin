@@ -114,7 +114,7 @@ const MenuEditor = ({ editor }: { editor: Editor | null }) => {
           onPressedChange={opt.onClick}
           aria-label={opt.title}
           title={opt.title}
-          className="mr-1"
+          className="mr-1 hover:bg-[#fbed9d]"
         >
           {opt.icon}
         </Toggle>
