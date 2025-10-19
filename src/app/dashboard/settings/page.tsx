@@ -13,7 +13,7 @@ const Setting: React.FC = () => {
   const linkData = [
     { href: "/dashboard/settings/personal-information", text: "Personal Information" },
     { href: "/dashboard/settings/change-password", text: "Change Password" },
-    { href: "/dashboard/income/package", text: "Privacy Policy" },
+    { href: "/dashboard/settings/privacy-policy", text: "Privacy Policy" },
     { href: "/dashboard/income/package", text: "Terms and Condition" },
     { href: "/dashboard/income/package", text: "About us" },
   ];
